@@ -32,7 +32,7 @@
       <div class="row">
         <h3 style="font-weight:bold">{{data.price | priceFormat}}</h3>
         <div id="color-selector">
-          <p v-if="selected">Selected color: {{newProduct.color}}</p>
+          <p v-if="selected">Selected color: {{productToBeAdd.color}}</p>
           <ul>
             <li id="green" @click="assignColor('green')"><span></span></li>
             <li id="blue" @click="assignColor('blue')"><span></span></li>
@@ -42,7 +42,7 @@
           </ul>
         </div>
         <div id="memory-selector" class="mb-2">
-          <p v-if="memSelected">Selected memory of {{newProduct.memory}}</p>
+          <p v-if="memSelected">Selected memory of {{productToBeAdd.memory}}</p>
           <ul>
             <li><button @click="assignMem('128 GB')" class="btn btn-outline-primary">128 GB</button></li>
             <li><button @click="assignMem('256 GB')" class="btn btn-outline-primary">256 GB</button></li>
@@ -51,9 +51,11 @@
           </ul>
           <button class="btn btn-outline-primary" @click="clearProduct">Clear selected product</button>
         </div>
-        <div id="payment">
-          <input type="number" v-model="newProduct.quantity">
-          <button>Submit</button>
+        <hr>
+        <div class="input-group mb-3 w-75">
+          <input placeholder="quantity" type="text" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1">
+          <button @click="createProduct(productToBeAdd)">add</button>
+          <router-link :to="{name: 'Cart'}">Add to cart</router-link>
         </div>
       </div>
     </div>
@@ -67,6 +69,7 @@ import MyFooter from "../layout/MyFooter.vue";
 import BaseRequest from "../../store/BaseRequest";
 import config from "../../config";
 import { VueAgile } from "vue-agile";
+import {mapState, mapActions, mapGetters, mapMutations} from 'vuex'
 export default {
   components: {
     MyNavigation,
@@ -79,9 +82,9 @@ export default {
       thumbURL: config.thumbURL,
       data: null,
       productImages: null,
-      newProduct: {color: null, memory: null},
-      selected: false,
-      memSelected: false,
+      productToBeAdd: {title: null, price: null, color: 'green', memory: '128 GB', thumbnail: null},
+      selected: true,
+      memSelected: true,
       option: {
         navButtons: false,
         responsive: [
@@ -109,6 +112,9 @@ export default {
       BaseRequest.get("/products/" + productId).then((response) => {
         this.data = response.data.product;
         this.productImages = response.data.images;
+        this.productToBeAdd.title = response.data.product.title
+        this.productToBeAdd.price = response.data.product.price
+        this.productToBeAdd.thumbnail = this.baseURL + response.data.product.thumbnail
       });
     },
     changeSlide(index){
@@ -124,20 +130,27 @@ export default {
       this.$refs.thumbnails.goToNext()
     },
     assignColor(col){
-      this.newProduct.color = col;
+      this.productToBeAdd.color = col;
       this.selected = true;
     },
     assignMem(mem){
-      this.newProduct.memory = mem;
+      this.productToBeAdd.memory = mem;
       this.memSelected = true;
+      console.log(this.productToBeAdd);
     },
     clearProduct(){
       this.selected = false
       this.memSelected = false
-    }
+    },
+    ...mapActions(['createProduct']),
+    ...mapMutations(['setNewProduct'])
   },
   mounted() {
     this.getProductDetail(this.$route.params.id);
+  },
+  computed:{
+    ...mapGetters(['orders']),
+    ...mapState(['newProduct'])
   },
   filters:{
     priceFormat(value){
@@ -222,6 +235,11 @@ export default {
       margin: 0px 5px;
     }
   }
-
+}
+.input-group{
+  .btn{
+    background-color: #0066CC;
+    color: white;
+  }
 }
 </style>

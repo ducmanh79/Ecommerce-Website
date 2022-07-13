@@ -113,6 +113,7 @@ export default {
 }
 #second-nav .row .col {
     text-align: center;
+    padding: 15px 5px;
 }
 #second-nav .row .col a{
     white-space: nowrap;
