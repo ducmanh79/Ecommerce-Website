@@ -53,9 +53,8 @@
         </div>
         <hr>
         <div class="input-group mb-3 w-75">
-          <input placeholder="quantity" type="text" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1">
-          <button @click="createProduct(productToBeAdd)">add</button>
-          <router-link :to="{name: 'Cart'}">Add to cart</router-link>
+          <input v-model="productToBeAdd.quantity" placeholder="quantity" type="text" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1">
+          <button class="btn btn-primary" @click="confirmOrder">Add to cart</button>
         </div>
       </div>
     </div>
@@ -82,7 +81,7 @@ export default {
       thumbURL: config.thumbURL,
       data: null,
       productImages: null,
-      productToBeAdd: {title: null, price: null, color: 'green', memory: '128 GB', thumbnail: null},
+      productToBeAdd: {title: null, price: null, color: 'green', memory: '128 GB', thumbnail: null, quantity: 0},
       selected: true,
       memSelected: true,
       option: {
@@ -114,7 +113,7 @@ export default {
         this.productImages = response.data.images;
         this.productToBeAdd.title = response.data.product.title
         this.productToBeAdd.price = response.data.product.price
-        this.productToBeAdd.thumbnail = this.baseURL + response.data.product.thumbnail
+        this.productToBeAdd.thumbnail = this.thumbURL + response.data.product.thumbnail
       });
     },
     changeSlide(index){
@@ -141,6 +140,10 @@ export default {
     clearProduct(){
       this.selected = false
       this.memSelected = false
+    },
+    confirmOrder(){
+      this.createProduct(this.productToBeAdd);
+      this.$router.push({name: 'Cart'}); 
     },
     ...mapActions(['createProduct']),
     ...mapMutations(['setNewProduct'])
