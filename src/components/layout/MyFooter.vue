@@ -26,7 +26,7 @@
         </v-expansion-panels>
       </div>
 
-      <div class="social-list mt-2 border text-center" style="color: white">
+      <div class="social-list mt-2 text-center" style="color: white">
         <div class="row">
           <div class="col">
             <a href="facebook.com">
@@ -59,7 +59,6 @@
 }
 .container {
   background-color: black;
-  height: calc(100% - 120px);
   display: flex;
   justify-content: space-between;
 }
@@ -74,7 +73,6 @@
   max-width: 40%;
 }
 .social-list {
-  border: none !important;
   max-width: 20%;
 }
 .social-list .row {
@@ -86,6 +84,13 @@
 @media screen and (max-width: 800px) {
   .container {
     display: block;
+  }
+  .social-list{
+    border: 1px solid white;
+    max-width: 100%;
+  }
+  .social-list .row {
+    display: flex;
   }
   .social-list .row .col {
     margin: 10px 0px;

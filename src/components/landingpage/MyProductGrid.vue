@@ -31,15 +31,15 @@ export default {
   },
   methods:{
     changeImage(){
-      this.image = config.baseURL + this.productImages[1].image_path
+      this.image = this.productImages[1]
     },
     changeImage2(){
-      this.image = config.baseURL + this.productImages[0  ].image_path
+      this.image = this.product.src
     }
   },
   mounted(){
     this.productImages = this.product.images
-    this.image = config.baseURL + this.productImages[0].image_path;
+    this.image = this.product.src
   }
 }
 </script>

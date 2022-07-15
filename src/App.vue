@@ -15,11 +15,11 @@ export default {
 </script>
 
 <style scoped>
-template{
-  width: 100%;
-}
 #app{
-  width: 100%;
-  background-color: #F5F5F7;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  height: 100vh;
 }
 </style>

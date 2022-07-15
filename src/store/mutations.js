@@ -4,6 +4,5 @@ export default{
     },
     clearOrders(state){
         state.orders = [{title: null, price: null, color: null, memory: null, thumbnail: null}]
-        console.log(state.orders);
     }
 }

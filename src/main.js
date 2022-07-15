@@ -12,6 +12,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router'
 import store from './store'
+import VueAgile from 'vue-agile'
 
 Vue.config.productionTip = false
 
@@ -22,6 +23,13 @@ Vue.use(IconsPlugin)
 Vue.use(VueSplide)
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios);
+Vue.use(VueAgile)
+//Custom directives
+Vue.directive('rainbow',{
+  bind(el){
+    el.style.color = "#"+Math.random().toString().slice(2,8)
+  }
+})
 
 new Vue({
   vuetify,

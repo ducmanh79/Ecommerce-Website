@@ -6,11 +6,12 @@
       <MySlider />
       <div class="row mt-2">
         <div
-          class="p-3 col-6 col-sm-3"
-          v-for="(product, index) in data"
-          :key="index"
+          class="p-3 col-6 col-md-3"
+          v-for="(product, index) in products"
+          :key="index" @click="toProduct(index)"
+          style="cursor:pointer"
         >
-          <MyProductGrid :product="product" />
+          <MyProductGrid :product="product"/>
         </div>
       </div>
       <div class="container">
@@ -98,13 +99,13 @@
           Apple service centers abroad. Very complicated, right?
         </p>
         <div class="text-center">
-            <button
+          <button
             class="btn btn-outline-primary"
             @click="fullScript = !fullScript"
             v-show="!fullScript"
-            >
+          >
             View more
-            </button>
+          </button>
         </div>
         <Transition appear>
           <div v-show="fullScript">
@@ -134,21 +135,20 @@
             </p>
           </div>
         </Transition>
-
       </div>
       <div class="container mt-5">
         <div class="row text-center">
-            <h4>Subscribe to our latest news</h4>
-            <p>Special information</p>
+          <h4>Subscribe to our latest news</h4>
+          <p>Special information</p>
         </div>
         <div class="row">
-            <div class="col" style="display: flex">
+          <div class="col" style="display: flex">
             <b-form-input
-                class="w-75"
-                placeholder="Enter your name"
+              class="w-75"
+              placeholder="Enter your name"
             ></b-form-input>
             <button class="btn btn-primary w-25 ms-3">Subscribe</button>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -159,8 +159,6 @@
 <script>
 import MyNavigation from "../layout/MyNavigation.vue";
 import MyFooter from "../layout/MyFooter.vue";
-import BaseRequest from "../../store/BaseRequest";
-import config from "../../config";
 import MySlider from "../landingpage/MySlider.vue";
 import MyProductGrid from "../landingpage/MyProductGrid.vue";
 export default {
@@ -172,27 +170,70 @@ export default {
   },
   data() {
     return {
-      data: null,
-      baseURL: config.baseURL,
-      thumbURL: config.thumbURL,
       fullScript: false,
-    };
+      products: [
+        {
+          color: "green",
+          title: "iPhone 13 Pro Max",
+          bgtext: "Apple",
+          price: "26990000",
+          src: require("../../assets/product_thumb/iPhone13ProMaxthumb.png"),
+          images: [
+            require("../../assets/product_images/iPhone 13 Pro Max-image-165737423656.png"),
+            require("../../assets/product_images/iPhone 13 Pro Max-image-1657374236162.png"),
+            require("../../assets/product_images/iPhone 13 Pro Max-image-1657374236307.png"),
+            require("../../assets/product_images/iPhone 13 Pro Max-image-1657374236396.png"),
+          ],
+        },
+        {
+          color: "blue",
+          title: "iPhone 13",
+          bgtext: "Apple",
+          price: "18990000",
+          src: require("../../assets/product_thumb/iPhone13thumb.jpg"),
+          images: [
+            require("../../assets/product_images/iPhone 13-image-1657374272172.jpg"),
+            require("../../assets/product_images/iPhone 13-image-1657374272176.jpg"),
+            require("../../assets/product_images/iPhone 13-image-1657374272201.jpg"),
+            require("../../assets/product_images/iPhone 13-image-1657374272932.jpg"),
+          ],
+        },
+        {
+          color: "green",
+          title: "iPhone 12",
+          bgtext: "Apple",
+          price: "15790000",
+          src: require("../../assets/product_thumb/iPhone12thumb.png"),
+          images: [
+            require("../../assets/product_images/iPhone 12-image-1657374293277.jpg"),
+            require("../../assets/product_images/iPhone 12-image-1657374293285.jpg"),
+            require("../../assets/product_images/iPhone 12-image-1657374293395.png"),
+            require("../../assets/product_images/iPhone 12-image-1657374293873.jpg"),
+          ],
+        },
+        {
+          color: "green",
+          title: "iPhone 11",
+          bgtext: "Apple",
+          price: "10590000",
+          src: require("../../assets/product_thumb/iPhone11thumb.png"),
+          images: [
+            require("../../assets/product_images/iPhone 11-image-1657374313307.jpg"),
+            require("../../assets/product_images/iPhone 11-image-1657374313391.jpg"),
+            require("../../assets/product_images/iPhone 11-image-1657374313859.jpg"),
+            require("../../assets/product_images/iPhone 11-image-1657374313962.png"),
+          ],
+        },
+      ],
+    }
   },
-  mounted() {
-    this.getProductList();
-  },
-  methods: {
-    getProductList() {
-      BaseRequest.get("/products").then((response) => {
-        this.data = response.data.products;
-      });
-    },
-  },
+  methods:{
+    toProduct(index){
+      this.$router.push({name: 'ProductDetail', params: {id: index}})
+    }
+  }
 };
 </script>
 
 <style scoped>
-#main{
-  height: 100%;
-}
 </style>

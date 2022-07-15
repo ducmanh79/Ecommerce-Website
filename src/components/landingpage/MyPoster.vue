@@ -1,14 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container" >
         <div class="row">
-            <div class="p-3 col-lg-4 col-sm-12">
-                <img src="https://shopdunk.com/wp-content/uploads/2022/06/AirPods-MB.jpg" alt="" class="poster">
-            </div>
-            <div class="p-3 col-lg-4 col-sm-12">
-                <img src="https://shopdunk.com/wp-content/uploads/2022/06/Pencil-MB.jpg" alt="" class="poster">
-            </div>
-            <div class="p-3 col-lg-4 col-sm-12">
-                <img src="https://shopdunk.com/wp-content/uploads/2022/06/Care-MB.jpg" alt="" class="poster">
+            <div class="p-3 col-md-4" v-for="(poster,index) in posterList" :key="index">
+                <img :src="poster" alt="" class="poster">
             </div>
         </div>
     </div>
@@ -16,11 +10,7 @@
 <script>
 
 export default {
-    data(){
-        return{
-            posterList: null
-        }
-    }
+    props: ['posterList'],
 }
 </script>
 <style scoped>
